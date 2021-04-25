@@ -1,0 +1,25 @@
+# Import the necessary libraries
+# For more information about the proposed Single Volume Image Generator please Visit here "https://nilearn.github.io/modules/generated/nilearn.plotting.plot_glass_brain.html"
+
+from nilearn import image
+from nilearn import datasets
+from nilearn.image import iter_img
+from nilearn.plotting import plot_glass_brain
+from nilearn import plotting
+from matplotlib import pyplot as plt
+import os, shutil
+
+
+original_dir = 'E:/ASD1_Data' # Path to the Original Data Directory which includes 4D fMRI images of ASD and TC
+my_path = os.path.join(original_dir, 'MaxMun_d_0051355_func_preproc.nii') # Make a new folder for each subject
+os.mkdir(my_path)
+
+rsn = 'E:/ASD1_Data/MaxMun_d_0051355_func_preproc.nii.gz' # Import the subject image
+
+# Function to consider the 4D fMRI image of the subject for generating glass_brain images 
+for i, img in enumerate(iter_img(rsn)):
+    plotting.plot_glass_brain(img, threshold=3, display_mode="z",
+                              cut_coords=1, colorbar=False)
+    plt.savefig(os.path.join(my_path, 'asd%d' % i + ".png"))
+    
+    
